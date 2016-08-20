@@ -1,39 +1,35 @@
-$(document).ready(function() {
+$(document).ready(function () {
   var seq = [0, 2, 4, 7, 9, 12]
   var count = 0
-  function seqCount(seq) {
-    note = seq[count%seq.length]
+  function seqCount (seq) {
+    var note = seq[count % seq.length]
     count += 1
     return note
   }
 
-  $("button").click(function(){
+  $('button').click(function () {
     saw.play({
-      pitch : mtof(seqCount(seq) + 72),
+      pitch: mtof(seqCount(seq) + 72)
     })
   })
 })
 
-
-
 var saw = new Wad({
-  source : 'triangle',
-  volume : .5,
-  env : {
-    attack : 0.0,
-    decay : .6,
-    sustain : .2,
-    hold : .1,
-    release : 2
-  },
+  source: 'triangle',
+  volume: 0.5,
+  env: {
+    attack: 0.0,
+    decay: 0.6,
+    sustain: 0.2,
+    hold: 0.1,
+    release: 2
+  }
 })
 
-
-
-function randPitch() {
+function randPitch () {
   return Math.floor(Math.random() * 12)
 }
 
-function mtof(m) {
-  return Math.pow(2,(m-69)/12) * 440
+function mtof (m) {
+  return Math.pow(2, (m - 69) / 12) * 440
 }
