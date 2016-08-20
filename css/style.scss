@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+.container {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  height: 500px;
+  width: 500px;
+}
+
+.block {
+  border: 1px solid black;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 5%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column-reverse;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 5%;
+}
