@@ -1,4 +1,5 @@
 var seq
+var scale = [0, 2, 4, 7, 9, 12, 14, 16, 19, 24, 26, 28, 31, 36, 38, 40]
 $(document).ready(function () {
   grid[0][0] = 'x'
   renderGrid(grid)
@@ -36,7 +37,7 @@ function renderGrid (grid) {
   for (var i = 0; i < grid.length; i++) {
     $('.container').append('<div class="column "id="column' + i + '"></div>')
     for (var j = 0; j < grid[i].length; j++) {
-      $('#column' + i + '').append('<div class="block ' + grid[i][j] + '" x=' + i + ' y=' + j + '>' + grid[i][j] + '</div>')
+      $('#column' + i + '').append('<div class="block ' + grid[i][j] + '" x=' + i + ' y=' + j + '></div>')
     }
   }
   blockListener()
@@ -71,7 +72,7 @@ function loopSeq () {
 function playStep (step) {
   if (step.length > 0) {
     for (var i = 0; i < step.length; i++) {
-      var p = mtof(step[i] + 72)
+      var p = mtof(scale[step[i]] + 60)
       saw.play({
         pitch: p
       })
