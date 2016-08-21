@@ -11,10 +11,19 @@ $(document).ready(function () {
 
 function blockListener () {
   $('.block').click(function () {
-    grid[$(this).attr('x')][$(this).attr('y')] = 'x'
+    toggle(this)
+    // grid[$(this).attr('x')][$(this).attr('y')] = 'x'
     renderGrid(grid)
     seq = makeSeq(grid)
   })
+}
+
+function toggle (block) {
+  if (grid[$(block).attr('x')][$(block).attr('y')] === 'x') {
+    grid[$(block).attr('x')][$(block).attr('y')] = ' '
+  } else {
+    grid[$(block).attr('x')][$(block).attr('y')] = 'x'
+  }
 }
 
 var grid = generateGrid(16)
