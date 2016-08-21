@@ -19,6 +19,9 @@
 .x {
   background-color: red; }
 
+.o {
+  background-color: purple; }
+
 .column {
   display: flex;
   flex-direction: column-reverse;

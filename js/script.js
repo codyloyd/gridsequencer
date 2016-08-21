@@ -1,7 +1,7 @@
 var seq
 var scale = [0, 2, 4, 7, 9, 12, 14, 16, 19, 24, 26, 28, 31, 36, 38, 40]
 $(document).ready(function () {
-  grid[0][0] = 'x'
+  grid[0][0] = 'o'
   renderGrid(grid)
   seq = makeSeq(grid)
   $('button').click(function () {
@@ -10,19 +10,31 @@ $(document).ready(function () {
 })
 
 function blockListener () {
-  $('.block').click(function () {
-    toggle(this)
-    // grid[$(this).attr('x')][$(this).attr('y')] = 'x'
+  $('.block').mousedown(function (event) {
+    switch (event.which) {
+        case 1:
+            toggle(this, 'x')
+            break;
+        case 2:
+            toggle(this, ' ')
+            break;
+        case 3:
+            toggle(this, 'o')
+            break;
+        default:
+            alert('You have a strange Mouse!');
+    }
     renderGrid(grid)
     seq = makeSeq(grid)
   })
 }
 
-function toggle (block) {
-  if (grid[$(block).attr('x')][$(block).attr('y')] === 'x') {
+
+function toggle (block, marker) {
+  if (grid[$(block).attr('x')][$(block).attr('y')] === marker) {
     grid[$(block).attr('x')][$(block).attr('y')] = ' '
   } else {
-    grid[$(block).attr('x')][$(block).attr('y')] = 'x'
+    grid[$(block).attr('x')][$(block).attr('y')] = marker
   }
 }
 
@@ -57,9 +69,10 @@ function makeSeq (grid) {
   for (var i = 0; i < grid.length; i++) {
     var step = []
     for (var j = 0; j < grid[i].length; j++) {
-      if (grid[i][j] !== ' ') {
+      if (grid[i][j] === 'x') {
         step.push(j)
-      }
+      } else if (grid[i][j] === 'o')
+        step.push(j + 100)
     }
     seq.push(step)
   }
@@ -81,7 +94,13 @@ function loopSeq () {
 function playStep (step) {
   if (step.length > 0) {
     for (var i = 0; i < step.length; i++) {
-      var p = mtof(scale[step[i]] + 60)
+      if (step[i] > 99) {
+        randomNumber = Math.floor((Math.random() * 4) - 2)
+        console.log(randomNumber)
+        var p = mtof(scale[step[i] - 100 + randomNumber] + 60)
+      } else {
+        var p = mtof(scale[step[i]] + 60)
+      }
       saw.play({
         pitch: p
       })
