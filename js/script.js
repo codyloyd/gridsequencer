@@ -9,30 +9,29 @@ $(document).ready(function () {
   })
 })
 
-$(document).on("contextmenu", ".block", function(e){
-   return false;
-});
+$(document).on('contextmenu', '.block', function (e) {
+  return false
+})
 
 function blockListener () {
   $('.block').mousedown(function (event) {
     switch (event.which) {
-        case 1:
-            toggle(this, 'x')
-            break;
-        case 2:
-            toggle(this, ' ')
-            break;
-        case 3:
-            toggle(this, 'o')
-            break;
-        default:
-            alert('You have a strange Mouse!');
+      case 1:
+        toggle(this, 'x')
+        break
+      case 2:
+        toggle(this, ' ')
+        break
+      case 3:
+        toggle(this, 'o')
+        break
+      default:
+        alert('You have a strange Mouse!')
     }
     renderGrid(grid)
     seq = makeSeq(grid)
   })
 }
-
 
 function toggle (block, marker) {
   if (grid[$(block).attr('x')][$(block).attr('y')] === marker) {
@@ -75,8 +74,9 @@ function makeSeq (grid) {
     for (var j = 0; j < grid[i].length; j++) {
       if (grid[i][j] === 'x') {
         step.push(j)
-      } else if (grid[i][j] === 'o')
+      } else if (grid[i][j] === 'o') {
         step.push(j + 100)
+      }
     }
     seq.push(step)
   }
@@ -99,8 +99,7 @@ function playStep (step) {
   if (step.length > 0) {
     for (var i = 0; i < step.length; i++) {
       if (step[i] > 99) {
-        randomNumber = Math.floor((Math.random() * 4) - 2)
-        console.log(randomNumber)
+        var randomNumber = Math.floor((Math.random() * 4) - 2)
         var p = mtof(scale[step[i] - 100 + randomNumber] + 60)
       } else {
         var p = mtof(scale[step[i]] + 60)
