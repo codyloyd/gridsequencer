@@ -9,6 +9,10 @@ $(document).ready(function () {
   })
 })
 
+$(document).on("contextmenu", ".block", function(e){
+   return false;
+});
+
 function blockListener () {
   $('.block').mousedown(function (event) {
     switch (event.which) {
