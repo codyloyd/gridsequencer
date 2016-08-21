@@ -99,7 +99,7 @@ function playStep (step) {
   if (step.length > 0) {
     for (var i = 0; i < step.length; i++) {
       if (step[i] > 99) {
-        var randomNumber = Math.floor((Math.random() * 4) - 2)
+        var randomNumber = Math.floor((Math.random() * 6) - 3)
         var p = mtof(scale[step[i] - 100 + randomNumber] + 60)
       } else {
         var p = mtof(scale[step[i]] + 60)
@@ -113,7 +113,7 @@ function playStep (step) {
 
 var saw = new Wad({
   source: 'triangle',
-  volume: 0.5,
+  volume: 0.3,
   env: {
     attack: 0.0,
     decay: 0.6,
