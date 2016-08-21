@@ -1,7 +1,15 @@
 var seq
 var scale = [0, 2, 4, 7, 9, 12, 14, 16, 19, 24, 26, 28, 31, 36, 38, 40]
 $(document).ready(function () {
-  grid[0][0] = 'o'
+  grid[0][0] = 'x'
+  grid[4][2] = 'x'
+  grid[7][1] = 'x'
+  grid[8][0] = 'x'
+  grid[9][1] = 'x'
+  grid[10][3] = 'x'
+  grid[13][2] = 'x'
+  grid[0][6] = 'o'
+  grid[0][9] = 'o'
   renderGrid(grid)
   seq = makeSeq(grid)
   $('button').click(function () {
