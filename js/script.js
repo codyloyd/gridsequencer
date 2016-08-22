@@ -6,7 +6,7 @@ $(document).ready(function () {
   seq = makeSeq(grid)
   $('#play').click(function () {
     // loopSeq(seq)
-    Tone.Transport.bpm.value = 90
+    Tone.Transport.bpm.value = 86
     loop.start()
     Tone.Transport.start()
   })
@@ -46,8 +46,10 @@ function blockListener () {
       default:
         alert('You have a strange Mouse!')
     }
-    renderGrid(grid)
-    seq = makeSeq(grid)
+    setTimeout(function(){
+      renderGrid(grid)
+      seq = makeSeq(grid)
+    },0)
   })
 }
 
@@ -93,7 +95,7 @@ function makeSeq (grid) {
       if (grid[i][j] === 'x') {
         step.push(j)
       } else if (grid[i][j] === 'o') {
-        step.push(j + 100)
+        step.push(j + 1000)
       }
     }
     seq.push(step)
@@ -112,48 +114,32 @@ var loop = new Tone.Loop(function(time){
     playStep(seqCount(seq))
 }, "16n");
 
-function mapSeqFrequencies (seq) {
-  newseq = seq.map(mapStepFrequencies)
-  return newseq
-}
-
-function mapStepFrequencies (step) {
-  newstep = step.map(function(x){
-      mtof(scale[x])
-    })
-  return newstep
-}
-
-var freqSeq = mapSeqFrequencies(seq)
 
 function playStep (step) {
   if (step.length > 0) {
     for (var i = 0; i < step.length; i++) {
-      if (step[i] > 99) {
-        var randomNumber = Math.floor((Math.random() * 6) - 3)
-        var p = mtof(scale[step[i] - 100 + randomNumber] + 60)
+      if (step[i] < 1000) {
+        var p = mtof(scale[step[i]]+52)
       } else {
-        var p = mtof(scale[step[i]] + 60)
+        var p = mtof(scale[step[i - 1000] + Math.floor(Math.random() * 6 - 3)]  + 52)
       }
       synth.triggerAttackRelease(p,"16n")
     }
   }
 }
 
-var synth = new Tone.PolySynth(6, Tone.Synth, {
+var synth = new Tone.PolySynth(10, Tone.SimpleSynth, {
   "oscillator" : {
     type: "triangle"
   },
   "envelope": {
-    "attack":0.01,
+    "attack":0.03,
     "decay":0.4,
-    "sustain":.5,
-    "release":5
+    "sustain":.2,
+    "release":6
   },
   "volume" : -6
 }).toMaster();
-
-// var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
 
 function mtof (m) {
   return Math.pow(2, (m - 69) / 12) * 440
