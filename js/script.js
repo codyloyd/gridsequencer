@@ -1,6 +1,25 @@
 var seq
 var scale = [0, 2, 4, 7, 9, 12, 14, 16, 19, 24, 26, 28, 31, 36, 38, 40]
 $(document).ready(function () {
+  loadDemoSong()
+  renderGrid(grid)
+  seq = makeSeq(grid)
+  $('#play').click(function () {
+    // loopSeq(seq)
+    Tone.Transport.bpm.value = 90
+    loop.start()
+    Tone.Transport.start()
+  })
+  $('#stop').click(function () {
+    Tone.Transport.stop()
+  })
+})
+
+$(document).on('contextmenu', '.block', function (e) {
+  return false
+})
+
+function loadDemoSong () {
   grid[0][0] = 'x'
   grid[4][2] = 'x'
   grid[7][1] = 'x'
@@ -10,16 +29,7 @@ $(document).ready(function () {
   grid[13][2] = 'x'
   grid[0][6] = 'o'
   grid[0][9] = 'o'
-  renderGrid(grid)
-  seq = makeSeq(grid)
-  $('button').click(function () {
-    loopSeq(seq)
-  })
-})
-
-$(document).on('contextmenu', '.block', function (e) {
-  return false
-})
+}
 
 function blockListener () {
   $('.block').mousedown(function (event) {
@@ -98,10 +108,23 @@ function seqCount (seq) {
   return note
 }
 
-function loopSeq () {
-  playStep(seqCount(seq))
-  setTimeout(function () { loopSeq(seq) }, 200)
+var loop = new Tone.Loop(function(time){
+    playStep(seqCount(seq))
+}, "16n");
+
+function mapSeqFrequencies (seq) {
+  newseq = seq.map(mapStepFrequencies)
+  return newseq
 }
+
+function mapStepFrequencies (step) {
+  newstep = step.map(function(x){
+      mtof(scale[x])
+    })
+  return newstep
+}
+
+var freqSeq = mapSeqFrequencies(seq)
 
 function playStep (step) {
   if (step.length > 0) {
@@ -112,24 +135,25 @@ function playStep (step) {
       } else {
         var p = mtof(scale[step[i]] + 60)
       }
-      saw.play({
-        pitch: p
-      })
+      synth.triggerAttackRelease(p,"16n")
     }
   }
 }
 
-var saw = new Wad({
-  source: 'triangle',
-  volume: 0.3,
-  env: {
-    attack: 0.0,
-    decay: 0.6,
-    sustain: 0.2,
-    hold: 0.1,
-    release: 2
-  }
-})
+var synth = new Tone.PolySynth(6, Tone.Synth, {
+  "oscillator" : {
+    type: "triangle"
+  },
+  "envelope": {
+    "attack":0.01,
+    "decay":0.4,
+    "sustain":.5,
+    "release":5
+  },
+  "volume" : -6
+}).toMaster();
+
+// var pingPong = new Tone.PingPongDelay("4n", 0.2).toMaster();
 
 function mtof (m) {
   return Math.pow(2, (m - 69) / 12) * 440
