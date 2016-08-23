@@ -33,6 +33,7 @@ $(document).ready(function () {
   })
   $('#clear').click(function (){
     grid = generateGrid(16)
+    seq = makeSeq(grid)
     renderGrid(grid)
   })
   $('#clear').hover(function (){
