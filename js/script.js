@@ -20,7 +20,6 @@ $(document).ready(function () {
   renderGrid(grid)
   seq = makeSeq(grid)
   $('#play').click(function () {
-    // loopSeq(seq)
     Tone.Transport.bpm.value = 86
     loop.start()
     Tone.Transport.start()
