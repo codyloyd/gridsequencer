@@ -31,6 +31,16 @@ $(document).ready(function () {
     $(this).addClass('selected')
     $("#play").removeClass('selected')
   })
+  $('#clear').click(function (){
+    grid = generateGrid(16)
+    renderGrid(grid)
+  })
+  $('#clear').hover(function (){
+    $("#clear-text").css({"opacity":1})
+  },
+  function(){
+    $("#clear-text").css({"opacity":0})
+  })
 })
 
 $(document).on('contextmenu', '.block', function (e) {
