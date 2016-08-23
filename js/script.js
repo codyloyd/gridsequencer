@@ -1,5 +1,20 @@
 var seq
-var scale = [0, 2, 4, 7, 9, 12, 14, 16, 19, 24, 26, 28, 31, 36, 38, 40]
+var majPent = [0, 2, 4, 7, 9]
+var minPent = [0, 2, 3, 7, 10]
+var pentaSomething = [0, 2, 4, 7, 9, 11]
+var scale = fillScale(pentaSomething)
+
+function fillScale (seed) {
+  scale = []
+  count = 0
+  while (scale.length < 16) {
+    for (var i = 0; i < seed.length; i++) {
+      scale.push(seed[i] + (12 * count))
+    }
+    count ++
+  }
+  return scale
+}
 $(document).ready(function () {
   loadDemoSong()
   renderGrid(grid)
@@ -27,7 +42,7 @@ function loadDemoSong () {
   grid[9][1] = 'x'
   grid[10][3] = 'x'
   grid[13][2] = 'x'
-  grid[0][6] = 'o'
+  grid[0][5] = 'o'
   grid[0][9] = 'o'
 }
 
@@ -119,27 +134,31 @@ function playStep (step) {
   if (step.length > 0) {
     for (var i = 0; i < step.length; i++) {
       if (step[i] < 1000) {
-        var p = mtof(scale[step[i]]+52)
+        var p = mtof(scale[step[i]]+60)
       } else {
-        var p = mtof(scale[step[i - 1000] + Math.floor(Math.random() * 6 - 3)]  + 52)
+        var randomNumber = Math.floor((Math.random() * 6) - 3)
+        var p = mtof(scale[step[i] - 1000 + randomNumber] + 60)
       }
       synth.triggerAttackRelease(p,"16n")
     }
   }
 }
 
+var feedbackDelay = new Tone.FeedbackDelay("4n", 0.3).toMaster();
+
 var synth = new Tone.PolySynth(10, Tone.SimpleSynth, {
   "oscillator" : {
     type: "triangle"
   },
   "envelope": {
-    "attack":0.03,
+    "attack":0.003,
     "decay":0.4,
     "sustain":.2,
     "release":6
   },
-  "volume" : -6
-}).toMaster();
+  "volume" : -10
+}).connect(feedbackDelay);
+
 
 function mtof (m) {
   return Math.pow(2, (m - 69) / 12) * 440
