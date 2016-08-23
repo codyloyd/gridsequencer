@@ -4,8 +4,11 @@ $red: #FF2300;
 $purple: rgba(136, 0, 190, 1);
 $yellow: #FFC761;
 
+@import 'https://fonts.googleapis.com/css?family=Share+Tech+Mono';
+
 * {
   box-sizing: border-box;
+  font-family: "Share Tech Mono"
 }
 
 body {
@@ -15,13 +18,25 @@ body {
   align-items: center;
 }
 
-
-
+.title {
+  color: $gray;
+  font-size: 24px;
+}
+.help {
+  color: $gray;
+  font-size: 16px;
+}
+.text-container {
+  width: 160px;
+  padding-left: 20px;
+}
 .button-container {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: flex-end;
   flex-direction: column;
-  width: 60px;
+  width: 160px;
+  padding-right: 20px;
 }
 .container {
   display: flex;
