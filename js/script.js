@@ -23,9 +23,13 @@ $(document).ready(function () {
     Tone.Transport.bpm.value = 86
     loop.start()
     Tone.Transport.start()
+    $(this).addClass('selected')
+    $('#stop').removeClass('selected')
   })
   $('#stop').click(function () {
     Tone.Transport.stop()
+    $(this).addClass('selected')
+    $("#play").removeClass('selected')
   })
 })
 
@@ -121,11 +125,14 @@ var count = 0
 function seqCount (seq) {
   var note = seq[count % seq.length]
   count += 1
-  return note
+  return {note, count}
 }
 
 var loop = new Tone.Loop(function(time){
-    playStep(seqCount(seq))
+    step = seqCount(seq)
+    playStep(step.note)
+      $('#column' + ((step.count - 3) % seq.length) ).removeClass('highlighted');
+      $('#column' + ((step.count - 2) % seq.length) ).addClass('highlighted');
 }, "16n");
 
 

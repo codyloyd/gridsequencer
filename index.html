@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
   <title>gridseq</title>
   <link rel="stylesheet" href="./css/style.css" media="screen" title="no title" charset="utf-8">
-    <script type="text/javascript" src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
+  <script src="https://use.fontawesome.com/1e0b98791b.js"></script>
+  <script type="text/javascript" src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
   <script src="./js/jquery.js" charset="utf-8"></script>
   <script src="./js/script.js" charset="utf-8"></script>
 </head>
 <body>
-<div class="container"></div>
-<button id='play'>play</button>
-<button id='stop'>stop</button>
+  <div class="button-container">
+    <button class="block" id='play'><i class="fa fa-play-circle" aria-hidden="true"></i></button>
+    <button class="block selected" id='stop'><i class="fa fa-stop-circle" aria-hidden="true"></i></button>
+  </div>
+  <div class="container"></div>
 </body>
 </html>
