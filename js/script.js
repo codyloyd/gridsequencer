@@ -30,6 +30,7 @@ $(document).ready(function () {
     Tone.Transport.stop()
     $(this).addClass('selected')
     $("#play").removeClass('selected')
+    synth.triggerRelease()
   })
   $('#clear').click(function (){
     grid = generateGrid(16)
@@ -49,15 +50,30 @@ $(document).on('contextmenu', '.block', function (e) {
 })
 
 function loadDemoSong () {
-  grid[0][0] = 'x'
-  grid[4][2] = 'x'
-  grid[7][1] = 'x'
-  grid[8][0] = 'x'
-  grid[9][1] = 'x'
-  grid[10][3] = 'x'
-  grid[13][2] = 'x'
-  grid[0][5] = 'o'
-  grid[0][9] = 'o'
+  var dice = Math.floor(Math.random() * 2)
+  if (dice === 1) {
+    grid[0][0] = 'x'
+    grid[4][2] = 'x'
+    grid[7][1] = 'x'
+    grid[8][0] = 'x'
+    grid[9][1] = 'x'
+    grid[10][3] = 'x'
+    grid[13][2] = 'x'
+    grid[0][5] = 'o'
+    grid[0][9] = 'o'
+  } else {
+    grid[0][0] = 'x'
+    grid[3][1] = 'x'
+    grid[3][3] = 'x'
+    grid[4][4] = 'x'
+    grid[6][0] = 'x'
+    grid[8][9] = 'x'
+    grid[8][11] = 'o'
+    grid[9][5] = 'x'
+    grid[10][1] = 'x'
+    grid[10][3] = 'x'
+    grid[12][0] = 'x'
+  }
 }
 
 function blockListener () {
