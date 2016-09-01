@@ -77,11 +77,11 @@ button {
   height: 40px;
   width: 40px;
   border: none;
-  display: flex;
+  display: relative;
   justify-content: center;
   align-items: center;
   opacity: 1;
-  flex: 0 1 auto;
+  flex: 0 1 50%;
 }
 
 .selected{
